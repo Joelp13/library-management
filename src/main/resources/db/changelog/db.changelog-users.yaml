@@ -1,0 +1,55 @@
+databaseChangeLog:
+
+  # CREATE users table FIRST
+  - changeSet:
+      id: 1
+      author: admin
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: username
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: password
+                  type: VARCHAR(255)
+              - column:
+                  name: role
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+
+  # INSERT ADMIN (ALL ENVIRONMENTS)
+  - changeSet:
+      id: 2
+      author: admin
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: username, value: "admin" }
+              - column: { name: password, value: "admin123" }
+              - column: { name: role, value: "ROLE_ADMIN" }
+
+  # INSERT MEMBER (DEV ONLY)
+  - changeSet:
+      id: 3
+      author: admin
+      context: dev
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: username, value: "member" }
+              - column: { name: password, value: "password" }
+              - column: { name: role, value: "ROLE_USER" }
