@@ -1,6 +1,4 @@
-# ===============================
 # QA ENVIRONMENT CONFIG
-# ===============================
 
 spring.application.name=library
 

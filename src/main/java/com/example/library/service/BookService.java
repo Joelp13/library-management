@@ -11,28 +11,27 @@ public class BookService {
 
     private final BookRepository bookRepository;
 
-    // Constructor Injection (BEST PRACTICE)
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
-    // 🔹 Get all books
+    //Get all books
     public List<BookEntity> getAllBooks() {
         return bookRepository.findAll();
     }
 
-    // 🔹 Get book by ID
+    //Get book by ID
     public BookEntity getBookById(Long id) {
         return bookRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
     }
 
-    // 🔹 Add new book
+    //Add new book
     public BookEntity addBook(BookEntity book) {
         return bookRepository.save(book);
     }
 
-    // 🔹 Update existing book
+    //Update existing book
     public BookEntity updateBook(Long id, BookEntity book) {
         BookEntity existingBook = getBookById(id);
 
@@ -42,7 +41,7 @@ public class BookService {
         return bookRepository.save(existingBook);
     }
 
-    // 🔹 Delete book
+    //Delete book
     public void deleteBook(Long id) {
         if (!bookRepository.existsById(id)) {
             throw new RuntimeException("Book not found with id: " + id);

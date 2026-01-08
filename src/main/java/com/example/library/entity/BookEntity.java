@@ -16,17 +16,17 @@ public class BookEntity {
     @Column(length = 100, nullable = false)
     private String author;
 
-    // ✅ No-arg constructor (REQUIRED by JPA)
+    // No-arg constructor (REQUIRED by JPA)
     public BookEntity() {
     }
 
-    // ✅ Parameterized constructor
+    // Parameterized constructor
     public BookEntity(String title, String author) {
         this.title = title;
         this.author = author;
     }
 
-    // ✅ Getters & Setters
+    // Getters & Setters
     public Long getId() {
         return id;
     }

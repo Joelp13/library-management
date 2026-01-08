@@ -47,29 +47,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String username = jwtUtil.extractUsername(token);
         String role = jwtUtil.extractRole(token);
 
-        // 🔍 DEBUG (keep for now)
-        System.out.println("JWT username = " + username);
-        System.out.println("JWT role = " + role);
 
-        // ✅ ENSURE ROLE_ PREFIX
+        // ENSURE ROLE_ PREFIX
         if (!role.startsWith("ROLE_")) {
             role = "ROLE_" + role;
         }
 
         var authority = new SimpleGrantedAuthority(role);
-
+        //Creates Authentication object
         UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(
                         username,
                         null,
                         List.of(authority)
                 );
-
+        //adds IP address and session info if any
         authentication.setDetails(
                 new WebAuthenticationDetailsSource().buildDetails(request)
         );
 
-        // ✅ THIS LINE IS CRITICAL
+        //Most important part it tells the user is authenticated for this request
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);

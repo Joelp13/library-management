@@ -55,7 +55,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ✅ REQUIRED for AuthController login
+    // REQUIRED for AuthController login
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authenticationConfiguration

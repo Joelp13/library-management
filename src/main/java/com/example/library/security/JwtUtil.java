@@ -19,11 +19,12 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long expiration;
 
+    //converts the secret key to cryptographic key
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    // Generate JWT
+    // Generate JWT token after login is done successfully
     public String generateToken(String username, String role) {
         return Jwts.builder()
                 .subject(username)
@@ -56,7 +57,7 @@ public class JwtUtil {
 
     private Claims getClaims(String token) {
         return Jwts.parser()
-                .verifyWith(getSigningKey())   // ✅ FIXED
+                .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
